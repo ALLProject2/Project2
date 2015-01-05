@@ -2,51 +2,84 @@
 
 #User = [Username, Password]
 
-#User1 = ["Admin", "Password1"]
-#User2 = ["Simran", "Password2"]
-#User3 = ["Callum", "Password3"]
-#User4 = ["CJ", "Password4"]
-#User5 = ["Jamie", "Password5"]
-#User6 = ["Ben", "Password6"]
+User1 = [["admin"], ["Password1"]]
+User2 = [["simran"], ["Password2"]]
+User3 = [["callum"], ["Password3"]]
+User4 = [["cj"], ["Password4"]]
+User5 = [["jamie"], ["Password5"]]
+User6 = [["ben"], ["Password6"]]
 
-User = [["Admin", "Password1"], ["Simran", "Password2"], ["Callum", "Password3"], ["CJ", "Password4"], ["Jamie", "Password5"], ["Ben", "Password6"]]
+#Users = [["Admin", "Password1"], ["Simran", "Password2"], ["Callum", "Password3"], ["CJ", "Password4"], ["Jamie", "Password5"], ["Ben", "Password6"]]
 
-Username = raw_input("Welcome, please input your username  ")
+def existing():
+    global lock1
+    global lock2
+    lock1 = "locked"
+    lock2 = "locked"
+    Iden = "User"
+    Username = raw_input("Please enter your username  ").lower()
+    if Username in User1[0]:
+        lock1 = "unlocked"
+        Iden = "Admin"
+    elif Username in User2[0]:
+        lock1 = "unlocked"
+        Iden = "Simran"
+    elif Username in User3[0]:
+        lock1 = "unlocked"
+        Iden = "Callum"
+    elif Username in User4[0]:
+        lock1 = "unlocked"
+        Iden = "CJ"
+    elif Username in User5[0]:
+        lock1 = "unlocked"
+        Iden = "Jamie"
+    elif Username in User6[0]:
+        lock1 = "unlocked"
+        Iden = "Ben"
+    else:
+        lock1 = "locked"
+    
+    Password = raw_input("Please enter your password  ")
+    if Password in User1[1]:
+        lock2 = "unlocked"
+    elif Password in User2[1]:
+        lock2 = "unlocked"
+    elif Password in User3[1]:
+        lock2 = "unlocked"
+    elif Password in User4[1]:
+        lock2 = "unlocked"
+    elif Password in User5[1]:
+        lock2 = "unlocked"
+    elif Password in User6[1]:
+        lock2 = "unlocked"
+    else:
+        lock2 = "locked"
 
-lock1 = False
-if Username in User[0]:
-    lock1 = True
-elif Username in User[1]:
-    lock1 = True
-elif Username in User[2]:
-    lock1 = True
-elif Username in User[3]:
-    lock1 = True
-elif Username in User[4]:
-    lock1 = True
-elif Username in User[5]:
-    lock1 = True
-else:
-    lock1 = False
+    if lock1 == "locked":
+        print "Incorrect Username"
+    if lock2 == "locked":
+        print "Incorrect Password"
 
-print lock1
+    if lock1 == "unlocked" and lock2 == "unlocked":
+        print "Welcome back " + Iden
 
-Password = raw_input("Please input your password  ")
+def new():
+    print("Please contact your system administrator to gain access ")
+    print("")
+    
+def Menu():
+    repeat = 1
+    while repeat == 1:
+        check = raw_input("Welcome, are you registered with this software? y/n  ").lower()
+        if check == "y":
+            existing()
+            repeat = 0
+        elif check == "n":
+            new()
+            repeat = 1
+        else:
+            print("Please answer y/n ")
+            print("")
+            repeat = 1
 
-lock2 = False
-if Password in User[0]:
-    lock2 = True
-elif Password in User[1]:
-    lock2 = True
-elif Password in User[2]:
-    lock2 = True
-elif Password in User[3]:
-    lock2 = True
-elif Password in User[4]:
-    lock2 = True
-elif Password in User[5]:
-    lock2 = True
-else:
-    lock2 = False
-
-print lock2
+Menu()
