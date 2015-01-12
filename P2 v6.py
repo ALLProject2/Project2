@@ -51,6 +51,7 @@ def financial_statement():  #define code for financial statement as function
         resultFile = open("FinancialPosition.csv",'wb')
         wr = csv.writer(resultFile, dialect='excel')
         wr.writerow(service_name)  #write first row as sector name 
+        wr.writerow(["Company Name: " + name])    #write company name row   
         wr.writerow(title_list)     #Write second row as title_list values
         wr.writerow(financial_position)     #write third row as financial_position values
         print("Export successful")
@@ -95,7 +96,7 @@ def financial_statement():  #define code for financial statement as function
             print ("Total equity and liabilities are:"  " " "£"), total_equity_liabilities   #print value
             reset =1
         elif num == 8:  #if user selects option 8
-            
+            print""
             print ("non current assets are:"  " " "£"), non_current_assets       #print the result
             print ""    #print blank line
 
@@ -239,7 +240,8 @@ def income_statement():  #define code for income statement as function
         import csv
         resultFile = open("IncomeStatement.csv",'wb')
         wr = csv.writer(resultFile, dialect='excel')
-        wr.writerow(service_name)  #write first row as sector name 
+        wr.writerow(service_name)  #write first row as sector name
+        wr.writerow(["Company Name: " + name])    #write company name row
         wr.writerow(title_list)     #Write second row as title_list values
         wr.writerow(income_statement)     #write third row as financial_position values
         print("Export successful")
@@ -297,7 +299,7 @@ def income_statement():  #define code for income statement as function
             reset =1
         elif num == 11:  #if user selects option 10
 
-            
+            print ""
             print ("Sales are:" " " "£"), sales   #print value
             print ""    #print blank
             
