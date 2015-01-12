@@ -83,7 +83,7 @@ def existing():
         print "Welcome back " + Iden
     elif lock1 == "unlocked" and lock2 == "unlocked" and Guest == True:
         print "Welcome " + Iden
-        print "Please note: Guests cannot export data
+        print "Please note: Guests cannot export data"
         print "Please contact an administartor for a permanent login"
 
     #Non-registered users
