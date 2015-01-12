@@ -1,11 +1,9 @@
 ############Financial Statement Main#######################
-
 def financial_statement():  #define code for financial statement as function
     import urllib2
     import json
-
-    url = "http://dev.c0l.in:5984/financial_positions/30e901a7b7d8e98328dcd77c3600fa43"
-
+    user_input = raw_input("Enter 6 digit id: ")
+    url = "http://dev.c0l.in:5984/financial_positions/30e901a7b7d8e98328dcd77c36" + user_input
     response = urllib2.urlopen(url).read()
     data = json.loads(response.decode('utf8'))
 
@@ -38,6 +36,9 @@ def financial_statement():  #define code for financial statement as function
     global total_equity_liabilities
     total_equity_liabilities = equity + non_current_liabilities + current_liabilities
 
+    global name
+    name = str(data['company']['name'])
+    
     #set-up CSV file
     def exportCSV():
         #build list value for CSV export
@@ -56,6 +57,8 @@ def financial_statement():  #define code for financial statement as function
     reset = 1
     while reset == 1:
         print(" ")
+        print("Company Name: "),name
+        print(" ")
         print("1. Non current assets") #print option 1
         print("2. Current assets") #print option 2
         print("3. Total assets") #print option 3
@@ -68,7 +71,7 @@ def financial_statement():  #define code for financial statement as function
         print("10. Exit to previous menu") #print option 10
 
         print(" ")
-        num = input("Enter number:") #define user input selection
+        num = input("Enter number: ") #define user input selection
         
         if num == 1:    #if user selects option 1
             print ("non current assets are:" " " "£"), non_current_assets   #print value
@@ -113,9 +116,7 @@ def financial_statement():  #define code for financial statement as function
 
             print ("Total equity and liabilities are:"  " " "£"), total_equity_liabilities   #print the result
             print ""    #print blank line
-            reset =0
-            break
-              
+           
             #ask user if CSV export is required
             x = True    #declare x variable    
             while x == True:        #setup loop
@@ -141,6 +142,7 @@ def financial_statement():  #define code for financial statement as function
             def restart_main():
                 print ("1. Financial statement")    #display option 1
                 print ("2. Income statement")   #display option 2
+                print ("3. Shutdown")   #display option 3
 
                 print(" ")
                 selection = input("Enter number:")  #declare user selection variable
@@ -148,6 +150,13 @@ def financial_statement():  #define code for financial statement as function
 
                 if selection == 1: #if user selects option 1
                     financial_statement()   #call financial statement function
+                elif selection == 2:
+                    income_statement()
+                elif selection == 3:
+                    quit()
+                else:
+                    print("You have entered an invalid number")
+                    print(" ")
             reset = 0
             restart_main()
             break
@@ -162,7 +171,9 @@ def income_statement():  #define code for income statement as function
     import urllib2
     import json
 
-    url = "http://dev.c0l.in:5984/income_statements/30e901a7b7d8e98328dcd77c369bb8e7"
+    user_input = raw_input("Enter 6 digit id: ")
+    url = "http://dev.c0l.in:5984/income_statements/30e901a7b7d8e98328dcd77c36" + user_input
+
 
     response = urllib2.urlopen(url).read()
     data = json.loads(response.decode('utf8'))
@@ -194,7 +205,7 @@ def income_statement():  #define code for income statement as function
         
     #define interest_receivable
     global interest_receivable
-    interest_receivable = float(data['company']['interest_receivable']
+    interest_receivable = float(data['company']['interest_receivable'])
 
     #define and calc cost_of_sales
     global cost_of_sales
@@ -211,7 +222,10 @@ def income_statement():  #define code for income statement as function
     #define and calc profit for period
     global profit_for_period
     profit_for_period = net_profit - interest_payable + interest_receivable
-        
+
+    #define name
+    global name
+    name = str(data['company']['name'])
                       
 
     #set-up CSV file
@@ -219,7 +233,7 @@ def income_statement():  #define code for income statement as function
         #build list value for CSV export
         income_statement = [purchases, closing_stock, cost_of_sales, gross_profit, expenses, net_profit, interest_payable, interest_receivable, profit_for_period]
         #build title list for CSV export
-        title_list = ["Purchases", "Closing Stock", "Cost of Sales", "Gross Profit", "Expenses", "Net Profit", "Interest Payable", "Interest Receivable", "Profit For The Period]
+        title_list = ["Purchases", "Closing Stock", "Cost of Sales", "Gross Profit", "Expenses", "Net Profit", "Interest Payable", "Interest Receivable", "Profit For The Period"]
         #build list for service name
         service_name = ["Service Sector"]
         import csv
@@ -231,51 +245,61 @@ def income_statement():  #define code for income statement as function
         print("Export successful")
     reset = 1
     while reset == 1:
+        print ""
+        print ("Company Name:" ""), name
         print(" ")
-        print("1. Purchases") #print option 1
-        print("2. Closing Stock") #print option 2
-        print("3. Cost of Sales") #print option 3
-        print("4. Gross Profit") #print option 4
-        print("5. Expenses") #print option 5
-        print("6. Net Profit") #print option 6
-        print("7. Interest Payable") #print option 7
-        print("8. Interest Receivable") #print option 8
-        print("9. Profit For The Period") #print option 9
-        print("10. View ALL DATA") #print option 10
-        print("11. Export without viewing") #print option 11
-        print("12. Exit to previous menu") #print option 12
+        print("1. Sales")   #print option 1
+        print("2. Purchases") #print option 2
+        print("3. Closing Stock") #print option 3
+        print("4. Cost of Sales") #print option 4
+        print("5. Gross Profit") #print option 5
+        print("6. Expenses") #print option 6
+        print("7. Net Profit") #print option 7
+        print("8. Interest Payable") #print option 8
+        print("9. Interest Receivable") #print option 9
+        print("10. Profit For The Period") #print option 10
+        print("11. View ALL DATA") #print option 11
+        print("12. Export without viewing") #print option 12
+        print("13. Exit to previous menu") #print option 13
 
         print(" ")
         num = input("Enter number:") #define user input selection
-        
+
         if num == 1:    #if user selects option 1
+            print ("Sales are:" " " "£"), sales   #print value
+            reset =1
+        if num == 2:    #if user selects option 1
             print ("Purchases are:" " " "£"), purchases   #print value
             reset =1
-        elif num == 2:  #if user selects option 2
+        elif num == 3:  #if user selects option 2
             print ("Closing Stock is:"  " " "£"), closing_stock   #print value
             reset =1
-        elif num == 3:  #if user selects option 3
+        elif num == 4:  #if user selects option 3
             print ("Cost of Sales are:" " " "£"), cost_of_sales   #print value
             reset =1
-        elif num == 4:  #if user selects option 4
+        elif num == 5:  #if user selects option 4
             print ("Gross Profit is:"  " " "£"), gross_profit    #print value
             reset =1
-        elif num == 5:  #if user selects option 5
+        elif num == 6:  #if user selects option 5
             print ("Expenses are:"  " " "£"), expenses     #print value
             reset =1
-        elif num == 6:  #if user selects option 6
+        elif num == 7:  #if user selects option 6
             print ("Net Profit is:"  " " "£"), net_profit     #print value
             reset =1
-        elif num == 7:  #if user selects option 7
+        elif num == 8:  #if user selects option 7
             print ("Interest Payable is:"  " " "£"), interest_payable  #print value
             reset =1
-        elif num == 8:  #if user selects option 8
+        elif num == 9:  #if user selects option 8
             print ("Interest Receivable is:"  " " "£"), interest_receivable  #print value
             reset =1
-        elif num == 9:  #if user selects option 9
+        elif num == 10:  #if user selects option 9
             print ("Profit for the Period is:"  " " "£"), profit_for_period  #print value
             reset =1
-        elif num == 10:  #if user selects option 10
+        elif num == 11:  #if user selects option 10
+
+            
+            print ("Sales are:" " " "£"), sales   #print value
+            print ""    #print blank
             
             print ("Purchases are:"  " " "£"), purchases       #print the result
             print ""    #print blank line
@@ -303,9 +327,7 @@ def income_statement():  #define code for income statement as function
 
             print ("Profit for the Period is:"  " " "£"), profit_for_period   #print the result
             print ""    #print blank line
-            reset =0
-            break
-              
+
             #ask user if CSV export is required
             x = True    #declare x variable    
             while x == True:        #setup loop
@@ -323,14 +345,15 @@ def income_statement():  #define code for income statement as function
                 else:               #if the user enters anything outside above parameters
                     print "You have entered an invalid input"
                     x == True       
-        elif num == 11:
+        elif num == 12:
             exportCSV()
             reset =0
             break
-        elif num == 12:
+        elif num == 13:
             def restart_main():
                 print ("1. Financial statement")    #display option 1
                 print ("2. Income statement")   #display option 2
+                print ("3. Shutdown")   #display option 3
 
                 print(" ")
                 selection = input("Enter number:")  #declare user selection variable
@@ -338,33 +361,43 @@ def income_statement():  #define code for income statement as function
 
                 if selection == 1: #if user selects option 1
                     financial_statement()   #call financial statement function
-                else:
+                elif selection == 2:    #if user selects 2
                     income_statement()  #call income statement function
-            reset = 0
+                elif selection == 3:
+                    quit()
+                else:
+                    print("You have entered an invalid number")
+                    print(" ")
+                    reset = 0
             restart_main()
-            break
+                    
         else:
             print(" ")
-            print "You have entered an ivalid number"
+            print "You have entered an invalid number"
             reset = 1
+            break
 
 
 
             
 ########Start System Main#############              
-print ("1. Financial statement")    #display option 1
-print ("2. Income statement")   #display option 2
+def system_main():
+    print ("1. Financial statement")    #display option 1
+    print ("2. Income statement")   #display option 2
+    print ("3. Shutdown")   #display option 3
 
-print(" ")
-selection = input("Enter number:")  #declare user selection variable
-print (" ")
+    print(" ")
+    selection = input("Enter number: ")  #declare user selection variable
+    print (" ")
 
-if selection == 1: #if user selects option 1
-    financial_statement()   #call financial statement function
-else:   #if user selects 2
-    income_statement()  #call income statement function
-                
-
-
-
-
+    if selection == 1: #if user selects option 1
+        financial_statement()   #call financial statement function
+    elif selection == 2:    #if user selects 2
+        income_statement()  #call income statement function
+    elif selection == 3:
+       quit()
+    else:
+        print("You have entered an invalid number")
+        print(" ")
+        
+system_main()
