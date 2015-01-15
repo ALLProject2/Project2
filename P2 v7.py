@@ -502,7 +502,7 @@ def existing():
         print "Please note: Guests cannot export data"
         print "Please contact an administartor for a permanent login"
         print ""
-        system_main
+        system_main()
 
     #Non-registered users
 def new():
