@@ -483,10 +483,14 @@ def existing():
         lock2 = "locked"
 
     #Action for locked program
-    if lock1 == "locked":
+    if lock1 == "locked" and lock2 == "locked":
+        print "Incorrect Username"
+        print "Incorrect Password"
+        existing()
+    elif lock1 == "locked":
         print "Incorrect Username"
         existing()
-    if lock2 == "locked":
+    elif lock2 == "locked":
         print "Incorrect Password"
         existing()
 
