@@ -164,7 +164,7 @@ def financial_statement():  #define code for financial statement as function
             break
         else:
             print(" ")
-            print "You have entered an ivalid number"
+            print "You have entered an invalid number"
             reset = 1
 
 
@@ -270,34 +270,34 @@ def income_statement():  #define code for income statement as function
 
         if num == 1:    #if user selects option 1
             print ("Sales are:" " " "£"), sales   #print value
-            reset =1
+            reset == 1
         if num == 2:    #if user selects option 1
             print ("Purchases are:" " " "£"), purchases   #print value
-            reset =1
+            reset == 1
         elif num == 3:  #if user selects option 2
             print ("Closing Stock is:"  " " "£"), closing_stock   #print value
-            reset =1
+            reset == 1
         elif num == 4:  #if user selects option 3
             print ("Cost of Sales are:" " " "£"), cost_of_sales   #print value
             reset =1
         elif num == 5:  #if user selects option 4
             print ("Gross Profit is:"  " " "£"), gross_profit    #print value
-            reset =1
+            reset == 1
         elif num == 6:  #if user selects option 5
             print ("Expenses are:"  " " "£"), expenses     #print value
-            reset =1
+            reset == 1
         elif num == 7:  #if user selects option 6
             print ("Net Profit is:"  " " "£"), net_profit     #print value
-            reset =1
+            reset == 1
         elif num == 8:  #if user selects option 7
             print ("Interest Payable is:"  " " "£"), interest_payable  #print value
-            reset =1
+            reset == 1
         elif num == 9:  #if user selects option 8
             print ("Interest Receivable is:"  " " "£"), interest_receivable  #print value
-            reset =1
+            reset == 1
         elif num == 10:  #if user selects option 9
             print ("Profit for the Period is:"  " " "£"), profit_for_period  #print value
-            reset =1
+            reset == 1
         elif num == 11:  #if user selects option 10
 
             print ""
@@ -350,7 +350,7 @@ def income_statement():  #define code for income statement as function
                     x == True       
         elif num == 12:
             exportCSV()
-            reset =0
+            reset == 0
             break
         elif num == 13:
             def restart_main():
@@ -377,8 +377,8 @@ def income_statement():  #define code for income statement as function
         else:
             print(" ")
             print "You have entered an invalid number"
-            reset = 1
-            break
+            reset == 1
+            #break
 
 
 
@@ -503,7 +503,6 @@ def existing():
     elif lock1 == "unlocked" and lock2 == "unlocked" and Guest == True:
         print ""
         print "Welcome " + Iden
-        print "Please note: Guests cannot export data"
         print "Please contact an administartor for a permanent login"
         print ""
         system_main()
