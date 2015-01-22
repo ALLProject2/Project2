@@ -1,21 +1,55 @@
 
 ############Financial Statement Main#######################
 def financial_statement():  #define code for financial statement as function
+
+    user_response = raw_input("Type the business name to search" + " ")
+    user_response2 = raw_input("Enter the sector for business" + " "),user_response
+
     import urllib2
     import json
-    user_input = raw_input("Enter 6 digit id: ")
-    url = "http://dev.c0l.in:5984/financial_positions/30e901a7b7d8e98328dcd77c36" + user_input
-    response = urllib2.urlopen(url).read()
-    data = json.loads(response.decode('utf8'))
+
+    FPurl = "http://dev.c0l.in:5984/financial_positions/_all_docs"
+    response = urllib2.urlopen(FPurl).read()
+    data = json.loads(response)
+
+    for item in data['rows']:
+        FPurl2 = "http://dev.c0l.in:5984/financial_positions/" + item['id']
+        response2 = urllib2.urlopen(FPurl2).read()
+        data2 = json.loads(response2)
+        if user_response == data2['company']['name']:
+            print "Company found"
+            name = 1
+        else:
+            print "Company not found"
+        if user_response2 == data2['sector']:
+            print "Sector found"
+            sector = 1 
+        else:
+            print "Sector not found"
+        if name ==1 and sector == 1:
+            counter =1
+            while counter ==1:
+                print data2['company']['name'] + " " + data2['date'] + " " + data2['sector']
+                print "Seaching........."
+                counter ==2
+                break
+    print "All records retrieved"
+
+    #import urllib2
+    #import json
+    #user_input = raw_input("Enter 6 digit id: ")
+    #url = "http://dev.c0l.in:5984/financial_positions/30e901a7b7d8e98328dcd77c36" + user_input
+    #response = urllib2.urlopen(url).read()
+    #data = json.loads(response.decode('utf8'))
 
     
     #define non_current_assets variable
     global non_current_assets
-    non_current_assets = float(data['company']['non_current_assets'])
+    non_current_assets = float(data2['company']['non_current_assets'])
         
     #define current_assets variable
     global current_assets
-    current_assets = float(data['company']['current_assets'])
+    current_assets = float(data2['company']['current_assets'])
         
     #define and calculate total_assets
     global total_assets
@@ -23,15 +57,15 @@ def financial_statement():  #define code for financial statement as function
         
     #define equity variable
     global equity
-    equity = float(data['company']['equity'])
+    equity = float(data2['company']['equity'])
    
     #define non_current_liabilities
     global non_current_liabilities
-    non_current_liabilities = float(data['company']['non_current_liabilities'])
+    non_current_liabilities = float(data2['company']['non_current_liabilities'])
 
     #define current_liabilities
     global current_liabilities
-    current_liabilities = float(data['company']['current_liabilities'])
+    current_liabilities = float(data2['company']['current_liabilities'])
         
     #define and calculate total_equity_liabilities
     global total_equity_liabilities

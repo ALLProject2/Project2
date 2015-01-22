@@ -1,4 +1,4 @@
-user_response = raw_input("Type the business name to search")
+user_response = raw_input("Type the business name to search" + " ")
 
 import urllib2
 import json
