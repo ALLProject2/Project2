@@ -3,7 +3,7 @@
 def financial_statement():  #define code for financial statement as function
 
     user_response = raw_input("Type the business name to search" + " ")
-    user_response2 = raw_input("Enter the sector for business" + " "),user_response
+    #user_response2 = raw_input("Enter the sector for business" + " "),user_response
 
     import urllib2
     import json
@@ -16,24 +16,20 @@ def financial_statement():  #define code for financial statement as function
         FPurl2 = "http://dev.c0l.in:5984/financial_positions/" + item['id']
         response2 = urllib2.urlopen(FPurl2).read()
         data2 = json.loads(response2)
+
         if user_response == data2['company']['name']:
-            print "Company found"
-            name = 1
-        else:
-            print "Company not found"
-        if user_response2 == data2['sector']:
-            print "Sector found"
-            sector = 1 
-        else:
-            print "Sector not found"
-        if name ==1 and sector == 1:
+    
             counter =1
             while counter ==1:
-                print data2['company']['name'] + " " + data2['date'] + " " + data2['sector']
+                data_string = data2['company']['name'] + " " + data2['date'] + " " + data2['sector']
+                print data_string
                 print "Seaching........."
-                counter ==2
+                counter =2
                 break
-    print "All records retrieved"
+                response = 1
+            if response == 1:
+                print "All records retrieved"
+    
 
     #import urllib2
     #import json
