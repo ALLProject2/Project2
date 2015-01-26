@@ -3,11 +3,11 @@
 def financial_statement():  #define code for financial statement as function
 
     user_response = raw_input("Type the business name to search" + " ")
-    #user_response2 = raw_input("Enter the sector for business" + " "),user_response
-
+    
     import urllib2
     import json
 
+    
     FPurl = "http://dev.c0l.in:5984/financial_positions/_all_docs"
     response = urllib2.urlopen(FPurl).read()
     data = json.loads(response)
@@ -19,15 +19,30 @@ def financial_statement():  #define code for financial statement as function
         try:
             while user_response == data2['company']['name']:
             
-                data_string = data2['company']['name'] + " " + data2['date'] + " " + data2['sector']
+                data_string = data2['company']['name'] + " " + data2['date'] + " " + data2['sector'] + " " + "ID:" + str(data2['id'])
                 print data_string
                 print "Seaching........."
                 break
         except KeyError:
             print "All records retrieved!"
-
     
+    user_response2 = raw_input("Enter the ID of the required business from above" + " ")
 
+    FPurl3 = "http://dev.c0l.in:5984/financial_positions/_all_docs"
+    response3 = urllib2.urlopen(FPurl3).read()
+    data3 = json.loads(response3)
+
+    for items in data3['rows']:
+        FPurl4 = "http://dev.c0l.in:5984/financial_positions/" + item['id']
+        response4 = urllib2.urlopen(FPurl4).read()
+        data4 = json.loads(response4)
+        try:
+            while user_response2 == data4['id']:
+                print data4['company']['name'] + " " + data4['date'] + " " + data4['sector'] + " " + "ID:" + str(data4['id'])
+                break
+        except KeyError:
+            print "Done!"
+        
     #import urllib2
     #import json
     #user_input = raw_input("Enter 6 digit id: ")
