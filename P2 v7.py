@@ -16,19 +16,16 @@ def financial_statement():  #define code for financial statement as function
         FPurl2 = "http://dev.c0l.in:5984/financial_positions/" + item['id']
         response2 = urllib2.urlopen(FPurl2).read()
         data2 = json.loads(response2)
-
-        if user_response == data2['company']['name']:
-    
-            counter =1
-            while counter ==1:
+        try:
+            while user_response == data2['company']['name']:
+            
                 data_string = data2['company']['name'] + " " + data2['date'] + " " + data2['sector']
                 print data_string
                 print "Seaching........."
-                counter =2
                 break
-                response = 1
-            if response == 1:
-                print "All records retrieved"
+        except KeyError:
+            print "All records retrieved!"
+
     
 
     #import urllib2
@@ -68,7 +65,7 @@ def financial_statement():  #define code for financial statement as function
     total_equity_liabilities = equity + non_current_liabilities + current_liabilities
 
     global name
-    name = str(data['company']['name'])
+    name = str(data2['company']['name'])
     
     #set-up CSV file
     def exportCSV():
