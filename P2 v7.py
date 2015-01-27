@@ -37,7 +37,7 @@ def financial_statement():  #define code for financial statement as function
         response4 = urllib2.urlopen(FPurl4).read()
         data4 = json.loads(response4)
         try:
-            while user_response2 == data4['id']:
+            while user_response2 == str(data4['id']):
                 print data4['company']['name'] + " " + data4['date'] + " " + data4['sector'] + " " + "ID:" + str(data4['id'])
                 break
         except KeyError:
