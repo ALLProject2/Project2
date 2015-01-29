@@ -1,6 +1,5 @@
 ###########financial position search#################
 def financial_position_search():  #define code for financial statement as function
-
     print "1. Search by business name"
     print "2. Search business from sector"
     print " " 
@@ -13,10 +12,10 @@ def financial_position_search():  #define code for financial statement as functi
     
         import urllib2  #import library
         import json     #import json
-
+        #print statement
         if statement == 1:
             FPurl = "http://dev.c0l.in:5984/financial_positions/_all_docs"
-        elif statement == 2:
+        else:
             FPurl = "http://dev.c0l.in:5984/income_statements/_all_docs"
         
         response = urllib2.urlopen(FPurl).read()
@@ -24,38 +23,43 @@ def financial_position_search():  #define code for financial statement as functi
         counter = 0
         a = []
         for item in data['rows']:
+            #print statement
             if statement == 1:
                 FPurl2 = "http://dev.c0l.in:5984/financial_positions/" + item['id']
-            elif statement == 2:
+            elif statement ==2:
                 FPurl2 = "http://dev.c0l.in:5984/income_statements/" + item['id']
+
             response2 = urllib2.urlopen(FPurl2).read()
             data2 = json.loads(response2)
             try:
                 while user_response == data2['company']['name']:
-            
-                    data_string = data2['sector'] + ", " + data2['company']['name'] + ", " + data2['date'] + ", " + "id:" + str(data2['id'])
+                    if statement == 1:
+                        data_string = data2['sector'] + ", " + data2['company']['name'] + ", " + data2['date'] + ", " + "id:" + str(data2['id'])
+                    elif statement == 2:
+                        data_string = data2['sector'] + ", " + data2['company']['name'] + ", " + str(data2['fiscal_year_beginning']) + ", " + "id:" + str(data2['id'])
                     counter = counter + 1
                     print counter
+                    #print statement
                     a.append(data_string)
                     break
             except KeyError:
-                print "All records retrieved!"
-                print " "
-                print "Sorting retrieved records..."
-                print " " 
-                a.sort()
-            
-
-                value = 0
-                try:
-                    while value <= counter:
-                        print a[value]
-                        print " " 
-                        value = value + 1
-                except IndexError:
-                    print "Done!"
+                    print "All records retrieved!"
                     print " "
-                    id_search_financial_position()
+                    print "Sorting retrieved records..."
+                    print " " 
+                    a.sort()
+          
+
+                    value = 0
+                    try:
+                        while value <= counter:
+                            print a[value]
+                            print " " 
+                            value = value + 1
+                    except IndexError:
+                        print "Done!"
+                        print " "
+                        id_search_financial_position()
                     
     elif search_selection == 2:
         print " " 
@@ -71,53 +75,56 @@ def financial_position_search():  #define code for financial statement as functi
         print "financial"
         print " " 
 
-    sector_selection = raw_input("Enter a sector: ")
+        sector_selection = raw_input("Enter a sector: ")
 
-    import urllib2  #import library
-    import json     #import json
+        import urllib2  #import library
+        import json     #import json
 
-    if statement == 1:
-        FPurl = "http://dev.c0l.in:5984/financial_positions/_all_docs"
-    elif statement == 2:
-        FPurl = "http://dev.c0l.in:5984/income_statements/_all_docs"
-        
-    response = urllib2.urlopen(FPurl).read()
-    data = json.loads(response)
-    counter = 0
-    a = []
-    for item in data['rows']:
         if statement == 1:
-            FPurl2 = "http://dev.c0l.in:5984/financial_positions/" + item['id']
-        if statement == 2:
-            FPurl2 = "http://dev.c0l.in:5984/income_statements/" + item['id']
+            FPurl = "http://dev.c0l.in:5984/financial_positions/_all_docs"
+        elif statement ==2:
+            FPurl = "http://dev.c0l.in:5984/income_statements/_all_docs"
+        
+        response = urllib2.urlopen(FPurl).read()
+        data = json.loads(response)
+        counter = 0
+        a = []
+        for item in data['rows']:
+            if statement == 1:
+                FPurl2 = "http://dev.c0l.in:5984/financial_positions/" + item['id']
+            else:
+                FPurl2 = "http://dev.c0l.in:5984/income_statements/" + item['id']
             
-        response2 = urllib2.urlopen(FPurl2).read()
-        data2 = json.loads(response2)
-        try:
-            while sector_selection == data2['sector']:
-            
-                data_string = data2['company']['name'] + ", " + data2['date'] + ", " + "id:" + str(data2['id'])
-                counter = counter + 1
-                print counter
-                a.append(data_string)
-                break
-        except KeyError:
-            print "All records retrieved!"
-            print " "
-
-            a.sort()
-            
-
-            value = 0
+            response2 = urllib2.urlopen(FPurl2).read()
+            data2 = json.loads(response2)
             try:
-                while value <= counter:
-                    print a[value]
-                    print " " 
-                    value = value + 1
-            except IndexError:
-                print "Done!"
+                while sector_selection == data2['sector']:
+
+                    if statement ==1:
+                        data_string = data2['company']['name'] + ", " + data2['date'] + ", " + "id:" + str(data2['id'])
+                    elif statement == 2:
+                        data_string = data2['sector'] + ", " + data2['company']['name'] + ", " + str(data2['fiscal_year_beginning']) + ", " + "id:" + str(data2['id'])
+                    counter = counter + 1
+                    print counter
+                    a.append(data_string)
+                    break
+            except KeyError:
+                print "All records retrieved!"
                 print " "
-                id_search_financial_position()    
+
+                a.sort()
+            
+
+                value = 0
+                try:
+                    while value <= counter:
+                        print a[value]
+                        print " " 
+                        value = value + 1
+                except IndexError:
+                    print "Done!"
+                    print " "
+                    id_search_financial_position()    
     
 
 def id_search_financial_position():
@@ -129,7 +136,7 @@ def id_search_financial_position():
 
     if statement == 1:
         FPurl3 = "http://dev.c0l.in:5984/financial_positions/_all_docs"
-    elif statement == 2:
+    else:
         FPurl3 = "http://dev.c0l.in:5984/income_statements/_all_docs"
         
     response3 = urllib2.urlopen(FPurl3).read()
@@ -140,7 +147,7 @@ def id_search_financial_position():
 
         if statement == 1:
             FPurl4 = "http://dev.c0l.in:5984/financial_positions/" + items['id']
-        elif statement == 2:
+        else:
             FPurl4 = "http://dev.c0l.in:5984/income_statements/" + items['id']
 
         response4 = urllib2.urlopen(FPurl4).read()
@@ -150,7 +157,12 @@ def id_search_financial_position():
         try:
             while input_id == str(data4['id']):
                 global data_string2 
-                data_string2 = data4['sector'] + ", " + data4['company']['name'] + ", " + data4['date'] + ", " + "id:" + str(data4['id'])
+
+                if statement ==1:
+                        data_string2 = data4['company']['name'] + ", " + data4['date'] + ", " + "id:" + str(data4['id'])
+                elif statement == 2:
+                        data_string2 = data4['sector'] + ", " + data4['company']['name'] + ", " + str(data4['fiscal_year_beginning']) + ", " + "id:" + str(data4['id'])
+                
                 print " " 
                 print data_string2
 
@@ -182,34 +194,34 @@ def id_search_financial_position():
                     #define and calculate total_equity_liabilities
                     global total_equity_liabilities
                     total_equity_liabilities = equity + non_current_liabilities + current_liabilities
-                elif statement == 2:
+                else:
                     #define sales variable
                     global sales
-                    sales = float(data['company']['sales'])
+                    sales = float(data4['company']['sales'])
         
                     #define opening_stock variable
                     global opening_stock
-                    opening_stock = float(data['company']['opening_stock'])
+                    opening_stock = float(data4['company']['opening_stock'])
         
                     #define purchases
                     global purchases
-                    purchases = float(data['company']['purchases'])
+                    purchases = float(data4['company']['purchases'])
         
                     #define closing_stock
                     global closing_stock
-                    closing_stock = float(data['company']['closing_stock'])
+                    closing_stock = float(data4['company']['closing_stock'])
    
                     #define expenses
                     global expenses
-                    expenses = float(data['company']['expenses'])
+                    expenses = float(data4['company']['expenses'])
 
                     #define interest_payable
                     global interest_payable
-                    interest_payable = float(data['company']['interest_payable'])
+                    interest_payable = float(data4['company']['interest_payable'])
         
                     #define interest_receivable
                     global interest_receivable
-                    interest_receivable = float(data['company']['interest_receivable'])
+                    interest_receivable = float(data4['company']['interest_receivable'])
 
                     #define and calc cost_of_sales
                     global cost_of_sales
@@ -288,7 +300,7 @@ def financial_statement_display():
         else:
             print "OK"
 
-    elif statement == 2:
+    else:
 
         print " "
         print "=========================DISPLAY========================="

@@ -15,13 +15,13 @@ def financial_position_search():  #define code for financial statement as functi
         import json     #import json
 
     
-        FPurl = "http://dev.c0l.in:5984/financial_positions/_all_docs"
+        FPurl = "http://dev.c0l.in:5984/income_statements/_all_docs"
         response = urllib2.urlopen(FPurl).read()
         data = json.loads(response)
         counter = 0
         a = []
         for item in data['rows']:
-            FPurl2 = "http://dev.c0l.in:5984/financial_positions/" + item['id']
+            FPurl2 = "http://dev.c0l.in:5984/income_statements/" + item['id']
             response2 = urllib2.urlopen(FPurl2).read()
             data2 = json.loads(response2)
             try:
@@ -71,13 +71,13 @@ def financial_position_search():  #define code for financial statement as functi
     import json     #import json
 
     
-    FPurl = "http://dev.c0l.in:5984/financial_positions/_all_docs"
+    FPurl = "http://dev.c0l.in:5984/income_statements/_all_docs"
     response = urllib2.urlopen(FPurl).read()
     data = json.loads(response)
     counter = 0
     a = []
     for item in data['rows']:
-        FPurl2 = "http://dev.c0l.in:5984/financial_positions/" + item['id']
+        FPurl2 = "http://dev.c0l.in:5984/income_statements/" + item['id']
         response2 = urllib2.urlopen(FPurl2).read()
         data2 = json.loads(response2)
         try:
@@ -104,7 +104,7 @@ def financial_position_search():  #define code for financial statement as functi
             except IndexError:
                 print "Done!"
                 print " "
-                id_search_financial_position()    
+                #id_search_financial_position()    
     
 
 def id_search_financial_position():
@@ -115,13 +115,13 @@ def id_search_financial_position():
     import json
 
     
-    FPurl3 = "http://dev.c0l.in:5984/financial_positions/_all_docs"
+    FPurl3 = "http://dev.c0l.in:5984/income_statements/_all_docs"
     response3 = urllib2.urlopen(FPurl3).read()
     global data3
     data3 = json.loads(response3)
 
     for items in data3['rows']:
-        FPurl4 = "http://dev.c0l.in:5984/financial_positions/" + items['id']
+        FPurl4 = "http://dev.c0l.in:5984/income_statements/" + items['id']
         response4 = urllib2.urlopen(FPurl4).read()
         global data4
         data4 = json.loads(response4)
