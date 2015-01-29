@@ -1,136 +1,149 @@
 ###########financial position search#################
 def financial_position_search():  #define code for financial statement as function
-    print "1. Search by business name"
-    print "2. Search business from sector"
-    print " " 
+    #menu
+    print "1. Search by business name"  #display option 1
+    print "2. Search business from sector"  #display option 2
+    print " "   #print blank line
 
-    search_selection = input("Enter a number: ")
+    search_selection = input("Enter a number: ")    #declare option input for menu
 
-    if search_selection == 1:
+    if search_selection == 1:   #if the user selects 1 from the menu
     
-        user_response = raw_input("Type the business name to search" + " ")     #ask for user input
+        user_response = raw_input("Type the business name to search:" + " ")  #ask for user input
     
         import urllib2  #import library
         import json     #import json
-        #print statement
-        if statement == 1:
-            FPurl = "http://dev.c0l.in:5984/financial_positions/_all_docs"
-        else:
-            FPurl = "http://dev.c0l.in:5984/income_statements/_all_docs"
-        
-        response = urllib2.urlopen(FPurl).read()
-        data = json.loads(response)
-        counter = 0
-        a = []
-        for item in data['rows']:
-            #print statement
-            if statement == 1:
-                FPurl2 = "http://dev.c0l.in:5984/financial_positions/" + item['id']
-            elif statement ==2:
-                FPurl2 = "http://dev.c0l.in:5984/income_statements/" + item['id']
 
-            response2 = urllib2.urlopen(FPurl2).read()
-            data2 = json.loads(response2)
-            try:
-                while user_response == data2['company']['name']:
-                    if statement == 1:
-                        data_string = data2['sector'] + ", " + data2['company']['name'] + ", " + data2['date'] + ", " + "id:" + str(data2['id'])
-                    elif statement == 2:
-                        data_string = data2['sector'] + ", " + data2['company']['name'] + ", " + str(data2['fiscal_year_beginning']) + ", " + "id:" + str(data2['id'])
-                    counter = counter + 1
-                    print counter
-                    #print statement
-                    a.append(data_string)
+        if statement == 1:  #if the user has selected financial position from the main menu
+            FPurl = "http://dev.c0l.in:5984/financial_positions/_all_docs"  #set the api url to financial position
+        elif statement == 2:   #if the user selected income statement
+            FPurl = "http://dev.c0l.in:5984/income_statements/_all_docs"    #set the api url to income statement
+        
+        response = urllib2.urlopen(FPurl).read()    #delcare response: open, read url library
+        data = json.loads(response)     #delcare data: read response
+        counter = 0     #set counter variable to 0
+        a = []  #delcare blank list
+        for item in data['rows']:   #start loop for every record in data
+            
+            if statement == 1:  #if the user has selected financial position from the main menu
+                FPurl2 = "http://dev.c0l.in:5984/financial_positions/" + item['id']     #use financial position api and add on the id from the record
+            elif statement ==2: #if the user selected income statement
+                FPurl2 = "http://dev.c0l.in:5984/income_statements/" + item['id'] #use income statement api and add on the id from the record
+
+            response2 = urllib2.urlopen(FPurl2).read() #delcare response
+            data2 = json.loads(response2)   #delcare data
+            try:    #set try as when at the end of the list the key won't be found
+                while user_response == data2['company']['name']:  #if the business name entered matches one in the api
+                    if statement == 1:  #if the user selected financial position from the main menu
+                        data_string = data2['sector'] + ", " + data2['company']['name'] + ", " + data2['date'] + ", " + "id:" + str(data2['id']) #set the string
+                    elif statement == 2:    #if the user selected income statement from the main menu
+                        data_string = data2['sector'] + ", " + data2['company']['name'] + ", " + str(data2['fiscal_year_beginning']) + ", " + "id:" + str(data2['id'])  #set the string
+                    counter = counter + 1   #set counter to add one to count number of records found
+                    print counter   #print the counter value to display record number found
+                    a.append(data_string) #add the value of the variable data_string to the empty list before it changes
                     break
-            except KeyError:
-                    print "All records retrieved!"
-                    print " "
-                    print "Sorting retrieved records..."
-                    print " " 
-                    a.sort()
+            except KeyError:    #when at the end of api list there will be a KeyError
+                    print "All records retrieved!" #print response
+                    print " "   #print blank line
+                    print "Sorting retrieved records..." #print sorting prompt
+                    print " " #print blank line
+                    a.sort()    #sort the list in alphabetical order
           
+                    for val in a:
+                        print val
 
-                    value = 0
-                    try:
-                        while value <= counter:
-                            print a[value]
-                            print " " 
-                            value = value + 1
-                    except IndexError:
-                        print "Done!"
-                        print " "
-                        id_search_financial_position()
+                    id_search_financial_position()  #run the id search
                     
-    elif search_selection == 2:
-        print " " 
-        print "Available sectors:"
-        print " "
-        print "utilities"
-        print "consumer goods"
-        print "healthcare"
-        print "basic materials"
-        print "services"
-        print "technology"
-        print "industry goods"
-        print "financial"
-        print " " 
+    elif search_selection == 2:     #if the user selects search by sector
+        print " "                   #
+        print "Available sectors:"  #
+        print " "                   #        
+        print "utilities"           #           
+        print "consumer goods"      #  ###print sector values###     
+        print "healthcare"          #
+        print "basic materials"     #
+        print "services"            #
+        print "technology"          #
+        print "industry goods"      #
+        print "financial"           #
+        print " "   #print blank line
 
-        sector_selection = raw_input("Enter a sector: ")
+        
+        sector_selection = raw_input("Enter a sector: ")    #ask for user input
 
+        
+        if sector_selection == "utilities":
+            print "Searching for all business records in the UTILITIES industry"
+        elif sector_selection == "consumer goods":
+            print "Searching for all business records in the CONSUMER GOODS industry"
+        elif sector_selection == "healthcare":
+            print "Searching for all business records in the HEALTHCARE industry"
+        elif sector_selection == "basic materials":
+            print "Searching for all business records in the BASIC MATERIALS industry"
+        elif sector_selection == "services":
+            print "Searching for all business records in the SERVICES industry"
+        elif sector_selection == "technology":
+            print "Searching for all business records in the TECHNOLOGY industry"
+        elif sector_selection == "industry goods":
+            print "Searching for all business records in the INDUSTRY GOODS industry"
+        elif sector_selection == "financial":
+            print "Searching for all business records in the FINANCIAL industry"
+        else:
+            financial_position_search()
+        
         import urllib2  #import library
         import json     #import json
 
-        if statement == 1:
-            FPurl = "http://dev.c0l.in:5984/financial_positions/_all_docs"
-        elif statement ==2:
-            FPurl = "http://dev.c0l.in:5984/income_statements/_all_docs"
+        if statement == 1: #if the user selected financial position from the main menu
+            FPurl = "http://dev.c0l.in:5984/financial_positions/_all_docs" #use financial statement api
+        elif statement ==2:     #if the user selected the income statement from the main menu
+            FPurl = "http://dev.c0l.in:5984/income_statements/_all_docs" #use the income statement api
         
-        response = urllib2.urlopen(FPurl).read()
-        data = json.loads(response)
-        counter = 0
-        a = []
-        for item in data['rows']:
-            if statement == 1:
-                FPurl2 = "http://dev.c0l.in:5984/financial_positions/" + item['id']
-            else:
-                FPurl2 = "http://dev.c0l.in:5984/income_statements/" + item['id']
+        response = urllib2.urlopen(FPurl).read()    #delcare resonse variable
+        data = json.loads(response) #delcare data variable
+        counter = 0     #set counter variable value to 0
+        a = []  #declare empty list
+        for item in data['rows']:   #for each record in the api
+            if statement == 1: #if the user selected financial position from the main menu
+                FPurl2 = "http://dev.c0l.in:5984/financial_positions/" + item['id'] #use financial statement api with record id on the end 
+            elif statement ==2:
+                FPurl2 = "http://dev.c0l.in:5984/income_statements/" + item['id'] #use income statenemt api with recprd id on the end
             
-            response2 = urllib2.urlopen(FPurl2).read()
-            data2 = json.loads(response2)
+            response2 = urllib2.urlopen(FPurl2).read() #declare resonse
+            data2 = json.loads(response2) #declare data
             try:
-                while sector_selection == data2['sector']:
-
-                    if statement ==1:
-                        data_string = data2['company']['name'] + ", " + data2['date'] + ", " + "id:" + str(data2['id'])
-                    elif statement == 2:
-                        data_string = data2['sector'] + ", " + data2['company']['name'] + ", " + str(data2['fiscal_year_beginning']) + ", " + "id:" + str(data2['id'])
-                    counter = counter + 1
-                    print counter
-                    a.append(data_string)
+                while sector_selection == data2['sector']:  #start loop
+                                                            #while the users sector selection matches one in the api record 
+                    if statement ==1:  #if the user selected financial position from the menu
+                        data_string = data2['company']['name'] + ", " + data2['date'] + ", " + "id:" + str(data2['id']) #declare data string variable
+                    elif statement == 2:    #if the user selected income statement from the main menu
+                        data_string = data2['sector'] + ", " + data2['company']['name'] + ", " + str(data2['fiscal_year_beginning']) + ", " + "id:" + str(data2['id']) #declare data string variable
+                    counter = counter + 1 #add one to counter everytime a record matching criteria is found
+                    print counter #print the counter value to represent the number of records found matching the criteria
+                    a.append(data_string) #add the data string value to the list
                     break
-            except KeyError:
-                print "All records retrieved!"
-                print " "
+            except KeyError: 
+                print "All records retrieved!" #print response
+                print " "   #print blank line
 
-                a.sort()
-            
+                a.sort() #sort list in alphabetical order
 
-                value = 0
-                try:
-                    while value <= counter:
-                        print a[value]
-                        print " " 
-                        value = value + 1
-                except IndexError:
-                    print "Done!"
-                    print " "
-                    id_search_financial_position()    
+                for val in a:
+                    print val
+
+                id_search_financial_position()  #run the id search 
     
+    else:
+        print " "
+        print "Invalid input"
+        print "Please try again"
+        print " "
+        financial_position_search()
+        
+def id_search_financial_position():     #define id search function
 
-def id_search_financial_position():
-
-    input_id = raw_input("Enter ID from the list displayed above:" + " ")
-
+    input_id = raw_input("Enter ID from the list displayed above:" + " ")   #ask for user to input id
+    print "Searching......please wait....."
     import urllib2
     import json
 
@@ -165,6 +178,8 @@ def id_search_financial_position():
                 
                 print " " 
                 print data_string2
+                print " "
+                print "Please wait..."
 
                 if statement == 1:
                     #define non_current_assets variable
@@ -297,8 +312,10 @@ def financial_statement_display():
             wr.writerow(title_list)     #Write second row as title_list values
             wr.writerow(financial_position)     #write third row as financial_position values
             print("Export successful")
+            system_main()
         else:
             print "OK"
+            financial_position_search()
 
     else:
 
@@ -352,8 +369,10 @@ def financial_statement_display():
             wr.writerow(title_list)     #Write second row as title_list values
             wr.writerow(income_statement)     #write third row as financial_position values
             print("Export successful")
+            system_main()
         else:
             print "OK"
+            financial_position_search()
         
 
 ########Start System Main#############              
@@ -377,7 +396,9 @@ def system_main():
        quit()
     else:
         print("You have entered an invalid number")
+        print "Please try again"
         print(" ")
+        system_main()
         
 ##########Login Req####################
 #Username and Password database
